@@ -2,10 +2,67 @@
  * BrandPrintSSO
  * Modern JavaScript module for Brand Print SSO integration using Web Crypto API.
  */
+/**
+ * @typedef {Object} BrandPrintSSOPayload
+ * @property {string} [request_time] - Date and time (ISO 8601). Standard validity is 500s.
+ * @property {string} customer_user_name - 50 characters (A-Z0-9_-.@). Unique identifier like UserId or Email. (MANDATORY)
+ * @property {number} [customer_user_budgetgruppe__id] - ID of the user group.
+ * @property {string} [group_customer_number] - Match user group by customer number.
+ * @property {string} [group_name] - Name of the user group (created if missing if enabled).
+ * @property {string} [customer_longname] - User's full name.
+ * @property {string} [customer_firstname] - User's first name.
+ * @property {string} [customer_lastname] - User's last name.
+ * @property {string} [customer_user_businessunit] - Business unit.
+ * @property {string} [customer_user_purchaser] - Purchaser name.
+ * @property {string} [customer_user_company1] - Company line 1.
+ * @property {string} [customer_user_company2] - Company line 2.
+ * @property {string} [customer_user_company3] - Company line 3.
+ * @property {string} [customer_user_street] - Street address.
+ * @property {string} [customer_user_zip] - ZIP code.
+ * @property {string} [customer_user_town] - City/Town.
+ * @property {string} [customer_user_countrycode] - Country code (ISO 3166).
+ * @property {string} [customer_user_costcenter] - Cost center.
+ * @property {string} [customer_user_telefon] - Phone number.
+ * @property {string} [customer_user_telefax] - Fax number.
+ * @property {string} [customer_user_email] - Email address.
+ * @property {string} [user_groups_binary_url] - URL for user group logo.
+ * @property {string} [user_groups_binary_description] - Description for user group logo.
+ * @property {string} [customer_user_internet] - Website URL.
+ * @property {string} [customer_user_mobil] - Mobile number.
+ * @property {string} [customer_user_kundennummer] - Customer number.
+ * @property {57|58|59|60} [customer_user_level] - 57: User, 58: Supervisor, 59: Admin, 60: Interested party.
+ * @property {53|54} [freigabeportal_zeigen] - 53: Yes, 54: No.
+ * @property {string} [customer_user_aussendienst] - Field service info.
+ * @property {string} [customer_funktion] - User function/role.
+ * @property {'de'|'en'} [sprache] - Language (de: German, en: English).
+ * @property {string} [customfield1] - Custom field 1.
+ * @property {string} [customfield2] - Custom field 2.
+ * @property {string} [customfield3] - Custom field 3.
+ * @property {string} [customfield4] - Custom field 4.
+ * @property {string} [customfield5] - Custom field 5.
+ * @property {0|1|2} [delivery_address_editable] - 0: Yes, 1: No (w/o Email), 2: No.
+ * @property {'wg'|'pers'|'article_detail'|'reorder'} [dest_page] - Destination page type.
+ * @property {string|number} [dest_id] - ID of the destination entry.
+ * @property {number} [quantity] - Product quantity.
+ * @property {53|54} [skip_cart] - 53: Yes, 54: No.
+ * @property {0|1|2} [continue_shopping] - 0: Deactivate, 1: Activate, 2: SSO transfer point.
+ * @property {string} [pers_data] - Personalization data.
+ * @property {boolean} [test] - Set to true for test mode (shows debug output).
+ * @property {string} [lang] - Language ID (e.g., de_DE or en_EN).
+ * @property {string} [dynamic_lists] - JSON string for dynamic list entries.
+ * @property {Object} [view_settings] - UI visibility settings (cookie_notice, header, etc.).
+ * @property {string} [email_address_for_cost_release] - Email for cost release.
+ * @property {string} [external_order_number] - External reference number.
+ * @property {string} [return_url] - URL for the "back" button on finish page.
+ * @property {Object} [settings] - General user settings key-value pairs.
+ * @property {string} [redirect_url] - URL to redirect to after successful login.
+ */
+
 export class BrandPrintSSO {
   #shopUrl;
   #secretKey;
   #algorithm;
+  /** @type {BrandPrintSSOPayload} */
   #payload = {};
 
   /**
@@ -24,7 +81,7 @@ export class BrandPrintSSO {
 
   /**
    * Set multiple payload parameters at once.
-   * @param {Object} data 
+   * @param {Partial<BrandPrintSSOPayload>} data 
    */
   setPayload(data) {
     this.#payload = { ...this.#payload, ...data };
@@ -33,8 +90,9 @@ export class BrandPrintSSO {
 
   /**
    * Set a single payload parameter.
-   * @param {string} key 
-   * @param {any} value 
+   * @template {keyof BrandPrintSSOPayload} K
+   * @param {K} key 
+   * @param {BrandPrintSSOPayload[K]} value 
    */
   setParam(key, value) {
     this.#payload[key] = value;
