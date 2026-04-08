@@ -1,0 +1,21 @@
+{
+  "name": "@brandprint/sso",
+  "version": "1.0.0",
+  "description": "Modern JavaScript module for Brand Print SSO integration",
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": [
+    "sso",
+    "brandprint",
+    "aes",
+    "web-crypto"
+  ],
+  "author": "",
+  "license": "MIT"
+}
