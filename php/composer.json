@@ -1,0 +1,27 @@
+{
+    "name": "brandprint/sso",
+    "description": "Modern PHP module for Brand Print SSO integration",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "BrandPrint\\SSO\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=8.4.0",
+        "ext-openssl": "*",
+        "ext-hash": "*"
+    },
+    "config": {
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true
+        },
+        "platform": {
+            "php": "8.4.0"
+        }
+    },
+    "extra": {
+        "composer-version": ">=2.2.0 <3.0.0"
+    }
+}
