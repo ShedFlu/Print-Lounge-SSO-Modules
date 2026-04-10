@@ -69,7 +69,7 @@ use DateTimeImmutable;
  *   redirect_url?: string
  * }
  */
-readonly class BrandPrintSSO
+class BrandPrintSSO
 {
     private string $shopUrl;
     /** @var BrandPrintSSOPayload */
