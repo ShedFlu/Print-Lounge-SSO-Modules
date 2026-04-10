@@ -127,27 +127,22 @@ class BrandPrintSSO
     private function encrypt(): string
     {
         $queryString = $this->preparePayload();
-        
-        // Ensure the key length is correct by hashing it
-        $key = hash('sha256', $this->secretKey, true);
-        
-        $ivLength = openssl_cipher_iv_length($this->algorithm);
-        $iv = openssl_random_pseudo_bytes($ivLength);
-        
+
+        $iv = substr( hash( 'sha256', $this->secretKey ), 0, 16 );
+
         $encrypted = openssl_encrypt(
             $queryString,
             $this->algorithm,
-            $key,
-            OPENSSL_RAW_DATA,
+            $this->secretKey,
+            0,
             $iv
         );
 
-        if ($encrypted === false) {
-            throw new RuntimeException('Encryption failed: ' . openssl_error_string());
+        if ( $encrypted === false ) {
+            throw new RuntimeException( 'Encryption failed: ' . openssl_error_string() );
         }
 
-        // Combine IV + Encrypted Data and Base64 encode
-        return base64_encode($iv . $encrypted);
+        return $encrypted;
     }
 
     public function generateUrl(): string
