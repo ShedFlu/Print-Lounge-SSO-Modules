@@ -114,7 +114,7 @@ class BrandPrintSSO
         $data = $this->payload;
 
         if (!isset($data['request_time'])) {
-            $data['request_time'] = (new DateTimeImmutable())->format(DateTimeInterface::ISO8601);
+            $data['request_time'] = (new DateTimeImmutable())->format(DateTimeInterface::ATOM);
         }
 
         if (empty($data['customer_user_name'])) {
